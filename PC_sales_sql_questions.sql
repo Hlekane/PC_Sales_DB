@@ -75,14 +75,63 @@ SELECT DISTINCT Country_or_State
 -- INTERMEDIATE QUESTIONS
 
 -- 11. Calculate total revenue (SUM of Sale Price).
+
+SELECT Top 2*
+	FROM PC_sales
+
+SELECT SUM(Sale_Price) AS Total_Revenue
+FROM PC_sales
+
 -- 12. Calculate total profit (SUM of Sale Price - Cost Price).
+
+SELECT SUM(Sale_Price-Cost_Price) AS Total_Profit
+	FROM PC_sales
+		
 -- 13. Find the average Discount Amount.
+
+SELECT AVG(Discount_Amount) AS Average_Discount_Amount
+	FROM PC_sales
+
 -- 14. Calculate total Finance Amount issued.
+
+SELECT SUM(CAST(Finance_Amount AS bigint)) AS Total_Financial_Amount
+	FROM PC_sales
+
 -- 15. Find total revenue per PC Make.
+
+SELECT PC_Make,SUM(Sale_Price) AS Total_Revenue
+	FROM PC_sales
+	GROUP BY PC_Make
+
+SELECT PC_Make,SUM(Sale_Price-Discount_Amount) AS Total_RevenueExcluding_Discount
+	FROM PC_sales
+	GROUP BY PC_Make
+
+
 -- 16. Find average Sale Price per Storage Type.
+
+SELECT Storage_Type, AVG(Sale_Price) AS Sale_Per_StorageType
+	FROM PC_sales
+	GROUP BY Storage_Type
+
 -- 17. Calculate total revenue per Shop Name.
+
+SELECT Shop_Name,SUM(Sale_Price) AS Total_Revenue_PerShop
+	FROM PC_sales
+	GROUP BY Shop_Name
+
 -- 18. Calculate total revenue per Sales Person Name.
+
+SELECT Sales_Person_Name,SUM(Sale_Price) AS Total_PersonName
+	FROM PC_sales
+	GROUP BY Sales_Person_Name
+
 -- 19. Find average Credit Score per Payment Method.
+
+SELECT Payment_Method,AVG(Credit_Score) AS Average_Score_Payment_Method
+	FROM PC_sales
+	GROUP BY Payment_Method
+
 -- 20. Calculate total Cost of Repairs per Sales Person Department.
 
 -- ADVANCED QUESTIONS
