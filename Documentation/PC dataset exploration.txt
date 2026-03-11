@@ -1,0 +1,21 @@
+This dataset contains portable computers only, i.e., laptops, there are no desktops
+Some rows in the data contain string and integer data types, might need to convert/cast into int or varchar
+Some rows have null
+It contains information on laptop sales from different countries
+Laptops of different make and models
+Upon upload of the data set, column names changed due to invalid characters, duplication etc, column name can be edited in modify column page
+Contains data from two continents, 20 countries
+
+PC Makes: 10
+HP
+Acer
+Apple
+Dell
+Lenovo
+Toshiba
+Microsoft
+Samsung
+MSI
+Asus
+
+Anomalies: The sale price and cost price does not make sense. 
