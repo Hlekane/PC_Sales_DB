@@ -13,6 +13,8 @@ This project investigates key business questions to support better decision-maki
 * Analyzing pricing structures between cost and sale price
 * Detecting data quality issues such as duplicates
   
+## Key Insights
+*
 These insights can help organizations understand product demand, sales performance, and profitability patterns.
 
 ## Key Skills Demonstrated
