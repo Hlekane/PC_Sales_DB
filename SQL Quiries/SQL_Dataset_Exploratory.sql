@@ -31,14 +31,23 @@ CREATE TABLE [dbo].[Laptop_Sales](
 	[Ship_Date] [nvarchar](50) NOT NULL,
 	[Finance_Amount] [nvarchar](50) NOT NULL,
 	[RAM] [nvarchar](50) NOT NULL,
-	[Credit_Score] [int] NOT NULL,
+	[Credit_Score] [int] NOT NULL, 
 	[Channel] [nvarchar](50) NOT NULL,
 	[Priority] [nvarchar](50) NOT NULL,
 	[Cost_of_Repairs] [nvarchar](50) NOT NULL,
 	[Total_Sales_per_Employee] [int] NOT NULL,
 	[PC_Market_Price] [int] NOT NULL,
 	[Storage_Capacity] [nvarchar](50) NOT NULL
+
 ) ON [PRIMARY]
 GO
 
+-- Perusing the dataset, understanding what the data set contans
+Select Top 5 * 
+	From [dbo].[Laptop_Sales]
 
+-- Checking for number of continents
+Select Distinct Continent
+	From [dbo].[Laptop_Sales]
+
+-- Calculate total costs to check the data set
