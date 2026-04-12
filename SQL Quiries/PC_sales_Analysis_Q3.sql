@@ -11,68 +11,49 @@
 
 Select Shop_Name, SUM(Sale_Price-Cost_Price) as Profit_Per_Shop_Name
 	From Laptop_Sales
-	Group by Shop_Name
+	Group by Shop_Name;
 
 -- 22. Calculate profit margin per sale ((Sale Price - Cost Price) / Sale Price).
 
-Select SUM(Sale_Price - Cost_Price / Sale_Price) as Profit_Margin_Per_Sale
-	From Laptop_Sales
-
-Select SUM(Sale_Price - Cost_Price / Sale_Price) * 100 as Profit_Margin_Per_Sale
-	From Laptop_Sales
+Select AVG((Sale_Price - Cost_Price / Sale_Price)) * 100 as Profit_Margin_Per_Sale
+	From Laptop_Sales;
 
 -- 23. Determine which Continent has the highest total revenue.
 
-Select distinct top 1 Continent, MAX(Sale_Price-Discount_Amount) as Continent_with_Highest_Revenue
+Select distinct top 1 Continent, SUM(Sale_Price - Discount_Amount) as Total_revenue
 	From Laptop_Sales
 	Group by Continent
+	Order by Total_revenue desc;
 
 -- 24. Calculate average Sale Price per RAM size.
 
 Select RAM, AVG(Sale_Price) as Avg_sale_per_ramsize
 	From Laptop_Sales
 	Group by RAM
-	Order by Avg_sale_per_ramsize 
+	Order by Avg_sale_per_ramsize desc;
 
 -- 25. Find the PC Model with the highest Sale Price.
 
-Select Distinct Top 100 PC_Model, MAX(Sale_Price) as PC_model_with_max_saleprice
+Select Distinct Top 1 PC_Model, MAX(Sale_Price) as Highest_Sale_Price
 	From Laptop_Sales
 	Group by PC_Model
-	Order by PC_model_with_max_saleprice desc
+	Order by Highest_Sale_Price desc
 
 -- 26. Calculate the average number of days between Purchase Date and Ship Date.
+
 Select 
-	Customer_Name,
-	PC_Make,
-	Purchase_Date,
-	Ship_Date
+	AVG(DATEDIFF(DAY, 
+	Try_Cast(Purchase_Date As datetime), 
+	Try_Cast(Ship_Date As datetime))) As Days_between_PD_SD
 	From Laptop_Sales
-
-	Select 
-		Customer_Name,
-		AVG(DATEDIFF(Day,
-		TRY_CONVERT (datetime,Purchase_date),
-		TRY_CONVERT (datetime,Ship_Date))) AS Number_of_Days_Avg
-		FROM Laptop_Sales
-		GROUP BY Customer_Name;
-
-Select Top 2*
-	From Laptop_Sales;
-
-
-SELECT AVG(DATEDIFF(DAY, 
-Try_Cast(Purchase_Date AS datetime), 
-Try_Cast(Ship_Date AS datetime))) AS Days_between_PD_SD
-FROM Laptop_Sales
-WHERE Purchase_Date is not Null and Ship_Date is not Null
+	Where Purchase_Date is not Null and Ship_Date is not Null
 
 -- 27. Determine which Sales Person Department generates the highest revenue.
 
-Select Top 1 Sales_Person_Department, MAX(Sale_Price) as Highest_Rev_generation
+Select Top 1 Sales_Person_Department, SUM(Isnull (Sale_Price,0)) as Total_Revenue
 	From Laptop_Sales
 	Group by Sales_Person_Department
-	Order by Highest_Rev_generation desc
+	Order by Total_Revenue desc
 	
 -- 28. Calculate total revenue per Storage Capacity.
 
@@ -89,18 +70,13 @@ Select Sale_Price, PC_Market_Price
 -- 30. Rank Sales Person Name by Total Sales per Employee using a window function.
 -- The ranking window provide rankings of rows within a partition based on specific criteria (W3schools)
 
-Select Sales_Person_Name, Total_Sales_per_Employee,
-	Rank () Over ( Order by Total_Sales_Per_Employee Desc) Sales_Rank
- From Laptop_Sales
- Group by Sales_Person_Name
+Select *,
+       Rank() over (order by Total_Sales desc) As Sales_Rank
+From (
+    Select
+        Sales_Person_Name,
+        Avg(Sale_Price) As Total_Sales
+    From Laptop_Sales
+    Group by Sales_Person_Name
+) t;
 
- select Sales_Person_Name,
-    sum (Sale_Price) as Total_Sales,
-	rank() over (order by sum(Sale_Price ) DESC) as Rank_number
-	From Laptop_Sales
-	Group by Sales_Person_Name
-
-SELECT Sales_Person_Name,
-       Total_Sales_per_Employee,
-       RANK() OVER (ORDER BY Total_Sales_Per_Employee DESC) AS Sales_Rank
-	From Laptop_Sales

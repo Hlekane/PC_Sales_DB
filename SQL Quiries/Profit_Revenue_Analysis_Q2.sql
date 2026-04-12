@@ -5,26 +5,26 @@
 
 -- 11. Calculate total revenue (SUM of Sale Price).
 
-SELECT Top 2*
-	FROM Laptop_Sales
+Select Top 2 *
+	From Laptop_Sales
 
-SELECT SUM(Sale_Price) AS Total_Revenue
-FROM Laptop_Sales
+Select Sum(Sale_Price) As Total_Revenue
+From Laptop_Sales
 
---Which pc generates the most revenue?
+-- Which pc generates the most revenue?
 Select Top 1 PC_Make, 
-SUM(Sale_Price) as Most_Revenue
+Sum(Sale_Price) as Most_Revenue
 	From Laptop_Sales 
 	Group by PC_Make
 	Order by Most_Revenue Desc
 -- 12. Calculate total profit (SUM of Sale Price - Cost Price).
 
-SELECT SUM(Sale_Price-Cost_Price) AS Total_Profit
+SELECT SUM( isnull(Sale_Price,0) - ISNULL(Cost_Price,0)) AS Total_Profit
 	FROM Laptop_Sales
 		
 -- 13. Find the average Discount Amount.
 
-SELECT AVG(Discount_Amount) AS Average_Discount_Amount
+SELECT AVG(Isnull(Discount_Amount,0)) AS Average_Discount_Amount
 	FROM Laptop_Sales
 
 -- 14. Calculate total Finance Amount issued.
@@ -38,11 +38,6 @@ SELECT SUM(CAST(Finance_Amount AS bigint)) AS Total_Financial_Amount
 SELECT PC_Make,SUM(Sale_Price) AS Total_Revenue
 	FROM Laptop_Sales
 	GROUP BY PC_Make
-
-SELECT PC_Make,SUM(Sale_Price-Discount_Amount) AS Total_RevenueExcluding_Discount
-	FROM Laptop_Sales
-	GROUP BY PC_Make
-
 
 -- 16. Find average Sale Price per Storage Type.
 
@@ -58,20 +53,18 @@ SELECT Shop_Name,SUM(Sale_Price) AS Total_Revenue_PerShop
 
 -- 18. Calculate total revenue per Sales Person Name.
 
-SELECT Sales_Person_Name,SUM(Sale_Price) AS Total_PersonName
+SELECT Sales_Person_Name,SUM(Sale_Price) AS Total_Revenue
 	FROM Laptop_Sales
 	GROUP BY Sales_Person_Name
 
 -- 19. Find average Credit Score per Payment Method.
 
-SELECT Payment_Method,AVG(Credit_Score) AS Average_Score_Payment_Method
+SELECT Payment_Method,AVG(Credit_Score) AS Average_Score
 	FROM Laptop_Sales
 	GROUP BY Payment_Method
 
 -- 20. Calculate total Cost of Repairs per Sales Person Department.
--- 20. Calculate total Cost of Repairs per Sales Person Department.
-Select top 2*
-	From Laptop_Sales
-Select Sales_Person_Department, SUM(CAST(Cost_of_Repairs AS Int)) As Total_Cost_repairs
+
+Select Sales_Person_Department, SUM(CAST(Cost_of_Repairs AS bigint)) As Total_Cost_repairs
 	From Laptop_Sales
 	Group by Sales_Person_Department

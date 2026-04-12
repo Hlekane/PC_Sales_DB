@@ -68,9 +68,6 @@ SELECT COUNT(DISTINCT PC_Make) As PC_Make_Values
 
 SELECT *
 	FROM Laptop_Sales
-	WHERE Purchase_Date = '2022-01-01' 
+	WHERE Purchase_Date = '2020-01-01' 
 
-SELECT YEAR(Purchase_Date) AS Specific_Year
-	FROM Laptop_Sales
-	WHERE YEAR (Purchase_Date) = '2022'
 
